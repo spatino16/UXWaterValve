@@ -3441,11 +3441,6 @@
 			<locationURI>STUDIO_SDK_LOC/util/third_party/freertos/kernel/portable/SiliconLabs/tick_power_manager.c</locationURI>
 		</link>
 		<link>
-			<name>gecko_sdk_4.4.1/protocol/z-wave/platform/SiliconLabs/AppsHw/src/SwitchOnOff/SwitchOnOff_hw.c</name>
-			<type>1</type>
-			<locationURI>STUDIO_SDK_LOC/protocol/z-wave/platform/SiliconLabs/AppsHw/src/SwitchOnOff/SwitchOnOff_hw.c</locationURI>
-		</link>
-		<link>
 			<name>gecko_sdk_4.4.1/protocol/z-wave/platform/SiliconLabs/AppsHw/src/common/IADC.c</name>
 			<type>1</type>
 			<locationURI>STUDIO_SDK_LOC/protocol/z-wave/platform/SiliconLabs/AppsHw/src/common/IADC.c</locationURI>
