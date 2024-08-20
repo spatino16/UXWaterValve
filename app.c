@@ -35,7 +35,24 @@
 static uint8_t m_aDebugPrintBuffer[96];
 #endif
 
+#include "mycc/CC_Meter.h"
+#include "mycc/CC_Meter_app.h"
+
+
 void ApplicationTask(SApplicationHandles* pAppHandles);
+
+static SSwTimer meterDummyTestUpdateTimer;
+void meterDummyTestUpdateTimerCallback(SSwTimer *pTimer);
+
+uint32_t dummyGallons = 0;
+
+
+void meterDummyTestUpdateTimerCallback(SSwTimer *pTimer)
+{
+  (void)pTimer;
+  dummyGallons++;
+  cc_meter_app_set_current_WaterGallonsConsumed(dummyGallons);
+}
 
 /**
  * @brief See description for function prototype in ZW_basis_api.h.
@@ -107,6 +124,14 @@ ApplicationTask(SApplicationHandles* pAppHandles)
 
   app_hw_init();
 
+
+  /* Iniciar el temporizador para simular el consumo del medidor */
+  AppTimerRegister(&meterDummyTestUpdateTimer, true, meterDummyTestUpdateTimerCallback);
+  TimerStart(&meterDummyTestUpdateTimer, 100);
+
+  /* Iniciar reportes automáticos del medidor */
+  cc_meter_app_start_auto_reports(CC_METER_TIMER_AUTOREPORT_TIME_MS);
+
   /* Enter SmartStart*/
   /* Protocol will commence SmartStart only if the node is NOT already included in the network */
   ZAF_setNetworkLearnMode(E_NETWORK_LEARN_MODE_INCLUSION_SMARTSTART);
@@ -121,6 +146,8 @@ ApplicationTask(SApplicationHandles* pAppHandles)
     }
   }
 }
+
+
 
 /**
  * @brief The core state machine of this sample application.
