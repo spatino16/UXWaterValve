@@ -28,6 +28,7 @@
 
 #define SWITCH_TOGGLE_BTN   APP_BUTTON_A
 #define SWITCH_STATUS_LED   APP_LED_A
+#define BUTTON_AUTOREPORT_TOGGLE APP_BUTTON_B
 
 /* Ensure we did not allocate the same physical button or led to more than one function */
 STATIC_ASSERT(APP_BUTTON_LEARN_RESET != SWITCH_TOGGLE_BTN,
@@ -60,6 +61,10 @@ static void button_handler(BUTTON_EVENT event, bool is_called_from_isr)
   {
     app_event = EVENT_APP_SEND_NIF;
   }
+  else if (BTN_EVENT_SHORT_PRESS(BUTTON_AUTOREPORT_TOGGLE) == event)
+  {
+    app_event = EVENT_APP_BUTTON_B_PRESS;
+  }
 
   if (app_event != EVENT_EMPTY)
   {
@@ -75,7 +80,6 @@ static void button_handler(BUTTON_EVENT event, bool is_called_from_isr)
 }
 
 void app_hw_init(void)
-
 {
   DPRINT("--------------------------------\n");
   DPRINTF("%s: Toggle switch on/off\n", Board_GetButtonLabel(SWITCH_TOGGLE_BTN));
@@ -89,6 +93,7 @@ void app_hw_init(void)
   Board_SetButtonCallback(button_handler);
   Board_EnableButton(APP_BUTTON_LEARN_RESET);
   Board_EnableButton(SWITCH_TOGGLE_BTN);
+  Board_EnableButton(BUTTON_AUTOREPORT_TOGGLE);
 
 #if (HMI_CHECKER_ENABLE)
   HMIChecker_Init();  // Used to check the LEDs on the EXP board.
