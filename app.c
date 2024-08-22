@@ -172,16 +172,16 @@ zaf_event_distributor_app_event_manager(uint8_t event)
     case EVENT_APP_TOGGLE_LED:
 
       p_switches = cc_binary_switch_get_config();
-      if (cc_binary_switch_get_current_value(&p_switches[0]) > 0) 
+      if (cc_binary_switch_get_current_value(&p_switches[0]) > 0)
         {
           cc_binary_switch_set(&p_switches[0], 0);
-        } 
-      else 
+        }
+      else
         {
           cc_binary_switch_set(&p_switches[0], 0xFF); // 0xFF for last on value.
         }
       break;
-    
+
     case EVENT_APP_SEND_NIF:
       /*
        * This shows how to force the transmission of an Included NIF. Normally, an INIF is
